@@ -79,12 +79,20 @@ View(pacote_split)
 
 #----- Support - Nos diz o quão popular e um item (ou conjunto de itens), conforme medido pela proporção de transações nas quais o item (ou conjunto de itens) aparece.
 #----- Confidence - A confidence nos diz a probabilidade de compra do item Y quando o item X e comprado.
-#----- Lift - Indica quanto aumentou nossa confiança de que Y sera comprado, dado que X foi comprado.
+#----- Lift - Indica quanto aumentou nossa confiança de que Y sera comprado, dado que X foi 
 
+
+#----- Parametros do algoritmo:
+
+#----- lhs - Antecedente
+#----- rhs - Consequente
 
 # Transações
 ?as
 transacoes <- as(pacote_split, "transactions")
+str(transacoes)
+View(transacoes)
+dim(transacoes)
 
 # Inspeção das regras
 ?inspect
@@ -115,8 +123,10 @@ regras_produto3 <- apriori(transacoes,
 # Inspeção das regras
 inspect(head(sort(regras_produto3, by = "confidence"), 5))
 
-# Vamos verificar novamente as regras do produto: Dust-Off Compressed Gas 2 pack, 
-# alterando uma das métricas
+
+
+# ------ Vamos verificar novamente as regras do produto: Dust-Off Compressed Gas 2 pack, alterando uma das métricas
+
 regras_produto1 <- apriori(transacoes, 
                            parameter = list(minlen = 3, supp = 0.2, conf = 0.5, target = "rules"),
                            appearance = list(rhs = "Dust-Off Compressed Gas 2 pack", default = "lhs")) 
@@ -134,6 +144,7 @@ inspect(head(sort(regras_produto1_clean, by = "confidence"), 5))
 summary(regras_produto1_clean)
 
 # Plot
+plot(regras_produto1, measure = "support", shading = "confidence", method = "graph", engine = "html")
 plot(regras_produto1_clean, measure = "support", shading = "confidence", method = "graph", engine = "html")
 
 # Vamos verificar novamente as regras do produto: HP 61 ink,
@@ -155,6 +166,7 @@ inspect(head(sort(regras_produto2_clean, by = "confidence"), 5))
 summary(regras_produto2_clean)
 
 # Plot
+plot(regras_produto2, measure = "support", shading = "confidence", method = "graph", engine = "html")
 plot(regras_produto2_clean, measure = "support", shading = "confidence", method = "graph", engine = "html")
 
 # Vamos verificar novamente as regras do produto: VIVO Dual LCD Monitor Desk mount,
@@ -176,6 +188,7 @@ inspect(head(sort(regras_produto3_clean, by = "confidence"), 5))
 summary(regras_produto3_clean)
 
 # Plot
+plot(regras_produto3, measure = "support", shading = "confidence", method = "graph", engine = "html")
 plot(regras_produto3_clean, measure = "support", shading = "confidence", method = "graph", engine = "html")
 
 # Top 3 regras
