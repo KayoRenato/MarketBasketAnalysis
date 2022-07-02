@@ -1,4 +1,4 @@
-# Problema - Determinar quais produtos sao vendindo em conjunto (Market Basket Analysis)
+# Problema - Determinar quais produtos sao vendidos em conjunto (Market Basket Analysis)
 
 # Carrega os pacotes
 library(dplyr)
